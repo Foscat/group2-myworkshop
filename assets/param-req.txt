@@ -1,0 +1,9 @@
+Parameters
+
+oauth_consumer_key (required) - Your app's consumer key
+oauth_nonce (required) - Random 64-bit, unsigned number encoded as an ASCII string in decimal format. The nonce/timestamp pair should always be unique.
+oauth_version (required) - OAuth version used by your app. Must be "1.0" for now.
+oauth_signature (required) - String generated using the referenced signature method.
+oauth_signature_method (required) - Signature algorithm (currently only support "HMAC-SHA1")
+oauth_timestamp (required) - Integer representing the time the request is sent. The timestamp should be expressed in number of seconds after January 1, 1970 00:00:00 GMT.
+oauth_callback (optional) - URL to redirect to after request token is received and authorized by the user's chosen identity provider. For security reasons, production apps should always specify this parameter.
