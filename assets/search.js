@@ -5,6 +5,8 @@ var bookCover = "assets/images/bookDefault.jpg";
 
 //Run search baised on title
 $(document).on("click", "#titleSearch", function() {
+  $("#searched").empty();
+  $("#search-content").empty();
     var inputTitle = $("#titleInput").val().trim();
     console.log(inputTitle);
    
@@ -12,6 +14,8 @@ $(document).on("click", "#titleSearch", function() {
     "&filter=ebooks&maxResults=10&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
     
 
+    // tells user what they searched for
+    $("#searched").append(inputTitle);
     $.ajax({
       url: queryUrl,
       method: "GET"
@@ -34,7 +38,7 @@ $(document).on("click", "#titleSearch", function() {
           var author = response.items[i].volumeInfo.authors;
 
           //creates a p tag tied to the authors name who wrote book
-          var authorName = $("<p>").text("Author name: " + author);
+          var authorName = $("<p>").text("Author(s) name: " + author);
 
           bookCover = response.items[i].volumeInfo.imageLinks.thumbnail;
           
@@ -50,11 +54,8 @@ $(document).on("click", "#titleSearch", function() {
             "width": "250px",
          });
 
-        //  bookDiv.prepend(snippitPrint);
-
           //displays a still of the book cover
           bookDiv.prepend(bookImage);
-          
           //attaches author name to the end of the div
           bookDiv.prepend(authorName);
           
