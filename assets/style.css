@@ -9,3 +9,6 @@ body {
     flex-wrap: wrap;
      justify-content: space-around;
 }
+.author-names {
+    width: 50%;
+}
