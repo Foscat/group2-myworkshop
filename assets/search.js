@@ -1,10 +1,15 @@
 
+// global empties so nothing is ever undefined
+var bookCover = "assets/images/bookDefault.jpg";
+
+
 //Run search baised on title
 $(document).on("click", "#titleSearch", function() {
     var inputTitle = $("#titleInput").val().trim();
     console.log(inputTitle);
    
-    var queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + inputTitle + "&filter=ebooks&maxResults=10&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
+    var queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + inputTitle + 
+    "&filter=ebooks&maxResults=10&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
     
 
     $.ajax({
@@ -26,15 +31,18 @@ $(document).on("click", "#titleSearch", function() {
           });
         
           //gets author value for result
-          var author = response.items[i].volumeInfo.authors[0];
+          var author = response.items[i].volumeInfo.authors;
 
           //creates a p tag tied to the authors name who wrote book
           var authorName = $("<p>").text("Author name: " + author);
+
+          bookCover = response.items[i].volumeInfo.imageLinks.thumbnail;
           
-          var bookImage = $("<img src='" + "assets/images/bookDefault.jpg" + "'>");
+          var bookImage = $("<img src='" + bookCover + "'>");
 
           // var snippit = response.items[i].searchInfo.textSnippet;
-          // var snippitPrint = $("<p>").text(snippit);
+          // var cleansnip = snippit.trim();
+          // var snippitPrint = $("<p>").text(cleansnip);
 
           //setting attributes for still and animate
           bookImage.attr({
