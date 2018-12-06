@@ -1,9 +1,10 @@
 
 //Run search baised on title
 $(document).on("click", "#titleSearch", function() {
-    // var inputTitle = $(this).attr("data");
+    var inputTitle = $("#titleInput").val().trim();
+    console.log(inputTitle);
    
-    var queryUrl = "https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
+    var queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + inputTitle + "&filter=ebooks&maxResults=10&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
     
 
     $.ajax({
