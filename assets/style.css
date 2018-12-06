@@ -2,3 +2,10 @@ body {
     background-color: lightblue;
     padding: 20px;
 }
+#search-content {
+    width: 75%;
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+     
+}
