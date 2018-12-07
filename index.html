@@ -34,21 +34,22 @@
 
         <br>
 
-        <form id="check-block" class="form-group">
-            <label id="genre-checkbox-label" for="genre">What genre of book do you like</label>
-            <br>
-            <input id="myCheck" type="checkbox" name="genre" value="Thriller">Thriller
-            <br>
-            <!-- <input type="checkbox" name="genre" value="Mystery"> Mystery
-            <br>
-            <input type="checkbox" name="genre" value="History"> History -->
+        <div id="tag-pool">
 
-            <button id="genre-select" type="button">Submit genre filter</button>
-        </form>
-
-        <div>
-            <button id="subject-select">Submit subject filter</button>
+            <button type="button" id="clear-tags">Clear current tags</button>
         </div>
+
+        <form id="check-block" class="form-group">
+            <label id="genre-checkbox-label" for="tag">What kind of book are you lookin for?</label>
+            <br>
+            <input class="myCheck" type="checkbox" name="tag" value="Thriller">Thriller
+            <br>
+            <input class="myCheck" type="checkbox" name="tag" value="Mystery"> Mystery
+            <br>
+            <input class="myCheck" type="checkbox" name="tag" value="History"> History
+
+            <button id="tag-select" type="button">Send tags to search pool</button>
+        </form>
 
 
     </div>
