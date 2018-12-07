@@ -19,13 +19,10 @@
     <div class="container">
 
         <div class="book-head">
-            <h3>Book info</h3>
+            <h2>Book info</h2>
             <h4 id="searched"></h4>
         </div>
 
-        <div id="search-content">
-            
-        </div>
       
         <form class="form-group">
             <input type="text" id="titleInput" placeholder="Enter book title">
@@ -34,23 +31,38 @@
 
         <br>
 
-        <div id="tag-pool">
+        <div id="tag-box">
+            <h2>Active tags</h2>
+                <div id="active-tags">
 
+                
+                </div>
             <button type="button" id="clear-tags">Clear current tags</button>
+            <button id="tag-search" type="button">Search!</button>
         </div>
 
-        <form id="check-block" class="form-group">
-            <label id="genre-checkbox-label" for="tag">What kind of book are you lookin for?</label>
-            <br>
-            <input class="myCheck" type="checkbox" name="tag" value="Thriller">Thriller
-            <br>
-            <input class="myCheck" type="checkbox" name="tag" value="Mystery"> Mystery
-            <br>
-            <input class="myCheck" type="checkbox" name="tag" value="History"> History
+        <form id="tag-form" class="form-group">
+            <label id="tag-checkbox-label" for="tag">What kind of book are you lookin for?</label>
+
+            <div id="tag-pool">
+                <button class="tagButton" type="button" name="tag" value="history">History</button>
+            
+                <button class="tagButton" type="button" name="tag" value="science">Science</button>
+
+                <button class="tagButton" type="button" name="tag" value="mystery">Mystery</button>
+            </div>
 
             <button id="tag-select" type="button">Send tags to search pool</button>
         </form>
 
+        <form class="form-group">
+                <input type="text" id="tagMaker" placeholder="Make a new tag!">
+                <button id="tagGenerator" type="button">Make tag</button>
+        </form>
+
+        <div id="search-content">
+            
+            </div>
 
     </div>
     

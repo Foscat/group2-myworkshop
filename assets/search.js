@@ -94,28 +94,16 @@ $(document).on("click", "#titleSearch", function() {
   
   });
 
+  // takes in all users selected tags and puts them into query
+  var tagList = ["china", "pottery", "ancient"];
 
 
-
-$(document).on("click", "#clear-tags", function(){
-  $("#active-tags").empty();
-});
-
-
-
-
-
-
-
-
-///////////// Tag select funtion **Needs more work**--make objects to hold tags and then allow user to make thier own
-  $(document).on("click", "#tag-select", function(){
+///////////// Tag search funtion 
+  $("#tag-search").on("click", function(){
     console.log(this);
     $("#searched").empty();
     $("#search-content").empty();
 
-    // takes in all users selected tags and puts them into query
-    var tagList = ["china", "pottery", "ancient",];
     var tagpool= tagList.join("+");
     console.log(tagpool);
     
@@ -187,5 +175,20 @@ $(document).on("click", "#clear-tags", function(){
       });
   });
 
+  // **Needs more work**--make things reload with the new tag inside 
+  $("#tagGenerator").on("click", function(){
+    
+    var inputTag = $("#tagMaker").val().trim();
+    console.log(inputTag);
+    tagList.push(inputTag);
+    console.log(tagList);
+    
+  });
 
+
+//lets user clear seach tags
+$("#clear-tags").on("click", function(){
+  $("#active-tags").empty();
+  tagList = "";
+});
   
