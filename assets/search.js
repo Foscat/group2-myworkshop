@@ -94,7 +94,8 @@ $("#titleSearch").on("click", function() {
   var tagList = ["money", "power"];
   var activeTagList = ["food", "camping"];
 
-
+  console.log("inactive:  " + tagList);
+  console.log("active:  " + activeTagList);
 ///////////// Tag search funtion 
   $("#tag-search").on("click", function(){
     console.log(this);
@@ -166,12 +167,11 @@ $("#titleSearch").on("click", function() {
 
   function renderButtons() {
 
-    // Delete the content inside the people-gifs div prior to adding new movies
-    //  $("#active-tags").empty();
-    //  $("#people-tags").empty();
-    // (this is necessary otherwise you will have repeat buttons)
+    // empty current tag buttons to prevent repetes
+    $("#tag-pool").empty();
+    $("#active-tags").empty();
 
-    // Loop through the array of movies, then generate buttons for each movie in the array
+    // Loop through the array of active tags, then generate buttons for each tag name in the array
     for(i=0; i<activeTagList.length; i++){
       var newTagAct = $("<button class=tagButton active=true>").text(activeTagList[i]);
       
@@ -185,7 +185,7 @@ $("#titleSearch").on("click", function() {
      }
 
 
-    // Loop through the array of movies, then generate buttons for each movie in the array
+    // Loop through the array of unused tags, then generate buttons for each tag name in the array
     for(i=0; i<tagList.length; i++){
      var newTag = $("<button class=tagButton active=false>").text(tagList[i]);
      
@@ -209,22 +209,24 @@ $("#titleSearch").on("click", function() {
     tagList.push(inputTag);
     // check to see updated arry
     console.log(tagList);
-    // empty current tag buttons to prevent repetes
-    $("#tag-pool").empty();
+    
     // generate new buttons to replace the old ones that were deleted in the line above
     renderButtons();
   });
 
   // moves tag between unused and active tags **Needs work**--does not move buttons but causes the whole array to clear due to page refreshing on any click
-  $(".tagButton").on("click", function(){
-    // console.log(this);
-    $("#active-tags").append(this);
-    renderButtons();
+  $(".tagButton").on("click", function(event){
+    
     if(this.active == false){
+      $(tagList).pop(this);
+      $(activeTagList).push(this);
       console.log("false");
     }else{
+      $(activetagList).pop(this);
+      $(TagList).push(this);
       console.log("true");
     }
+    event.preventDefault();
   });
 
 
