@@ -216,30 +216,26 @@ $("#titleSearch").on("click", function() {
     renderButtons();
   });
 
-  // moves tag between unused and active tags **Needs work**--does not move buttons but causes the whole array to clear due to page refreshing on any click
-
+  // moves tag between unused and active tags 
 $(document).on("click", ".tagButton", function() {
-    // console.log($(this).attr('tag'))
+    
     var tag = $(this).attr('tag');
 
     if($(this).attr('active') == "false") {
-      var falseTagIndex = tagList.indexOf(tag)
+      var falseTagIndex = tagList.indexOf(tag);
       tagList.splice(falseTagIndex, 1);
       activeTagList.push(tag);
-      console.log(tagList, activeTagList)
+      console.log(tagList, activeTagList);
       renderButtons();
-      // console.log("false");
+      
     }else{
-      // activetagList.pop(this);
-      // TagList.push(this);
-      console.log("true");
+      var trueTagIndex = activeTagList.indexOf(tag);
+      activeTagList.splice(trueTagIndex, 1);
+      tagList.push(tag);
+      console.log(tagList, activeTagList);
+      renderButtons();
     }
 });
 
-
-//lets user clear active seach tags
-$("#clear-tags").on("click", function(){
-  $("#tag-pool").push("#active-tags");
-});
   
 renderButtons();
