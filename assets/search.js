@@ -92,7 +92,9 @@ $("#titleSearch").on("click", function() {
 
   // takes in all users selected tags and puts them into query
   var tagList = ["money", "power"];
+  console.log(tagList)
   var activeTagList = ["food", "camping", "grilling", "tents"];
+  console.log(activeTagList)
 
   console.log("inactive:  " + tagList);
   console.log("active:  " + activeTagList);
@@ -173,7 +175,7 @@ $("#titleSearch").on("click", function() {
 
     // Loop through the array of active tags, then generate buttons for each tag name in the array
     for(i=0; i<activeTagList.length; i++){
-      var newTagAct = $("<button class=tagButton active=true>").text(activeTagList[i]);
+      var newTagAct = $("<button class=tagButton active=true tag=" + activeTagList[i] + ">").text(activeTagList[i]);
       
       //attach the attribute of data-person to Person
       //  newTag.attr(people[i]);
@@ -187,7 +189,7 @@ $("#titleSearch").on("click", function() {
 
     // Loop through the array of unused tags, then generate buttons for each tag name in the array
     for(i=0; i<tagList.length; i++){
-     var newTag = $("<button class=tagButton active=false>").text(tagList[i]);
+     var newTag = $("<button class=tagButton active=false tag=" + tagList[i] + ">").text(tagList[i]);
      
      //attach the attribute of data-person to Person
      //  newTag.attr(people[i]);
@@ -215,22 +217,23 @@ $("#titleSearch").on("click", function() {
   });
 
   // moves tag between unused and active tags **Needs work**--does not move buttons but causes the whole array to clear due to page refreshing on any click
-  $(".tagButton").on("click", function(){
-    console.log('tag button')
-    if(this.active == false){
-      tagList.pop(this);
-      activeTagList.push(this);
-      console.log("false");
-    }else{
-      activetagList.pop(this);
-      TagList.push(this);
-      console.log("true");
-    }
-    // event.preventDefault();
-  });
 
 $(document).on("click", ".tagButton", function() {
-    console.log('alert');
+    // console.log($(this).attr('tag'))
+    var tag = $(this).attr('tag');
+
+    if($(this).attr('active') == "false") {
+      var falseTagIndex = tagList.indexOf(tag)
+      tagList.splice(falseTagIndex, 1);
+      activeTagList.push(tag);
+      console.log(tagList, activeTagList)
+      renderButtons();
+      // console.log("false");
+    }else{
+      // activetagList.pop(this);
+      // TagList.push(this);
+      console.log("true");
+    }
 });
 
 
