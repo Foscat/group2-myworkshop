@@ -92,13 +92,13 @@ $("#titleSearch").on("click", function() {
 
   // takes in all users selected tags and puts them into query
   var tagList = ["money", "power"];
-  var activeTagList = ["food", "camping"];
+  var activeTagList = ["food", "camping", "grilling", "tents"];
 
   console.log("inactive:  " + tagList);
   console.log("active:  " + activeTagList);
 ///////////// Tag search funtion 
   $("#tag-search").on("click", function(){
-    console.log(this);
+    console.log($(this));
     $("#searched").empty();
     $("#search-content").empty();
 
@@ -215,19 +215,23 @@ $("#titleSearch").on("click", function() {
   });
 
   // moves tag between unused and active tags **Needs work**--does not move buttons but causes the whole array to clear due to page refreshing on any click
-  $(".tagButton").on("click", function(event){
-    
+  $(".tagButton").on("click", function(){
+    console.log('tag button')
     if(this.active == false){
-      $(tagList).pop(this);
-      $(activeTagList).push(this);
+      tagList.pop(this);
+      activeTagList.push(this);
       console.log("false");
     }else{
-      $(activetagList).pop(this);
-      $(TagList).push(this);
+      activetagList.pop(this);
+      TagList.push(this);
       console.log("true");
     }
-    event.preventDefault();
+    // event.preventDefault();
   });
+
+$(document).on("click", ".tagButton", function() {
+    console.log('alert');
+});
 
 
 //lets user clear active seach tags
