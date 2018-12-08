@@ -5,7 +5,7 @@ var defaultSnippit = "blank";
 
 
 //Run search baised on title
-$(document).on("click", "#titleSearch", function() {
+$("#titleSearch").on("click", function() {
   $("#searched").empty();
   $("#search-content").empty();
     var inputTitle = $("#titleInput").val().trim();
@@ -77,13 +77,9 @@ $(document).on("click", "#titleSearch", function() {
 
         }
         
-        
       });
-     
 
   });
-
-
 
 
 
@@ -150,15 +146,7 @@ $(document).on("click", "#titleSearch", function() {
             class: "book-info",
             height: "300px",
             width: "250px",
-          });
-
-          // // commented out because it messes up querys need to make if elese statements to give default responeses
-          // response.items[i].searchInfo.textSnippet ?
-          //   snippit = response.items[i].searchInfo.textSnippet :
-          //   snippit = defaultSnippit;
-          // var snippitPrint = $("<p>").text(snippit);  
-          // // attaches snippit to book div 
-          // bookDiv.prepend(snippitPrint);       
+          });       
 
           // attaches first base link to book info **still needs work**
           bookDiv.prepend(infolink);
@@ -175,15 +163,44 @@ $(document).on("click", "#titleSearch", function() {
       });
   });
 
-  // **Needs more work**--make things reload with the new tag inside 
+  function renderButtons() {
+
+    // Delete the content inside the people-gifs div prior to adding new movies
+     $("#active-tags").empty();
+     $("#people-tags").empty();
+    // (this is necessary otherwise you will have repeat buttons)
+
+    // Loop through the array of movies, then generate buttons for each movie in the array
+    for(i=0; i<tagList.length; i++){
+     var newTag = $("<button class=tagButton active=false>").text(tagList[i]);
+     
+     //attach the attribute of data-person to Person
+     //  newTag.attr(people[i]);
+     
+     //put new button at the end othe other buttons
+     $("#tag-pool").append(newTag);
+     
+      
+    }
+  }
+
+  // generates new tag button 
   $("#tagGenerator").on("click", function(){
     
     var inputTag = $("#tagMaker").val().trim();
     console.log(inputTag);
     tagList.push(inputTag);
     console.log(tagList);
-    
+    renderButtons();
   });
+
+  // moves tag between unused and active tags
+  // $(".tagButton").on("click", function(){
+
+  //   if(this.active === true){
+  //     $()
+  //   }
+  // })
 
 
 //lets user clear seach tags
@@ -192,3 +209,4 @@ $("#clear-tags").on("click", function(){
   tagList = "";
 });
   
+renderButtons();

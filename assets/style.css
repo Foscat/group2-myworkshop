@@ -9,6 +9,9 @@ body {
     flex-wrap: wrap;
      justify-content: space-around;
 }
+.tagButton {
+    margin: 2px;
+}
 .author-names {
     width: 50%;
 }
