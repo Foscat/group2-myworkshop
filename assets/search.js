@@ -91,7 +91,7 @@ $("#titleSearch").on("click", function() {
   });
 
   // takes in all users selected tags and puts them into query
-  var tagList = ["china", "pottery", "ancient"];
+  var tagList = [];
 
 
 ///////////// Tag search funtion 
@@ -191,6 +191,7 @@ $("#titleSearch").on("click", function() {
     console.log(inputTag);
     tagList.push(inputTag);
     console.log(tagList);
+    $("#tag-pool").empty();
     renderButtons();
   });
 
