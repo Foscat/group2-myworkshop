@@ -59,7 +59,7 @@ $("#titleSearch").on("click", function() {
             width: "250px",
           });
 
-          // commented out because it messes up querys need to make if elese statements to give default responeses
+          // **Needs work**--it messes up querys need to make if elese statements to give default responeses
           // var snippit = response.items[i].searchInfo.textSnippet;
           // var cleansnip = snippit.trim();
           // var snippitPrint = $("<p>").text(cleansnip);          
@@ -91,7 +91,8 @@ $("#titleSearch").on("click", function() {
   });
 
   // takes in all users selected tags and puts them into query
-  var tagList = [];
+  var tagList = ["money", "power"];
+  var activeTagList = ["food", "camping"];
 
 
 ///////////// Tag search funtion 
@@ -100,7 +101,7 @@ $("#titleSearch").on("click", function() {
     $("#searched").empty();
     $("#search-content").empty();
 
-    var tagpool= tagList.join("+");
+    var tagpool= activeTagList.join("+");
     console.log(tagpool);
     
     queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + tagpool +
@@ -166,9 +167,23 @@ $("#titleSearch").on("click", function() {
   function renderButtons() {
 
     // Delete the content inside the people-gifs div prior to adding new movies
-     $("#active-tags").empty();
-     $("#people-tags").empty();
+    //  $("#active-tags").empty();
+    //  $("#people-tags").empty();
     // (this is necessary otherwise you will have repeat buttons)
+
+    // Loop through the array of movies, then generate buttons for each movie in the array
+    for(i=0; i<activeTagList.length; i++){
+      var newTagAct = $("<button class=tagButton active=true>").text(activeTagList[i]);
+      
+      //attach the attribute of data-person to Person
+      //  newTag.attr(people[i]);
+      
+      //put new button at the end othe other buttons
+      $("#active-tags").append(newTagAct);
+      
+       
+     }
+
 
     // Loop through the array of movies, then generate buttons for each movie in the array
     for(i=0; i<tagList.length; i++){
@@ -186,28 +201,36 @@ $("#titleSearch").on("click", function() {
 
   // generates new tag button 
   $("#tagGenerator").on("click", function(){
-    
+    //take in value of make new tag maker bar
     var inputTag = $("#tagMaker").val().trim();
+    // check that info came in right
     console.log(inputTag);
+    // put the string into the tagList array
     tagList.push(inputTag);
+    // check to see updated arry
     console.log(tagList);
+    // empty current tag buttons to prevent repetes
     $("#tag-pool").empty();
+    // generate new buttons to replace the old ones that were deleted in the line above
     renderButtons();
   });
 
-  // moves tag between unused and active tags
-  // $(".tagButton").on("click", function(){
+  // moves tag between unused and active tags **Needs work**--does not move buttons but causes the whole array to clear due to page refreshing on any click
+  $(".tagButton").on("click", function(){
+    // console.log(this);
+    $("#active-tags").append(this);
+    renderButtons();
+    if(this.active == false){
+      console.log("false");
+    }else{
+      console.log("true");
+    }
+  });
 
-  //   if(this.active === true){
-  //     $()
-  //   }
-  // })
 
-
-//lets user clear seach tags
+//lets user clear active seach tags
 $("#clear-tags").on("click", function(){
-  $("#active-tags").empty();
-  tagList = "";
+  $("#tag-pool").push("#active-tags");
 });
   
 renderButtons();
