@@ -1,4 +1,4 @@
 exports.khan = {
-    consumer: process.env.ConsumerKey,
-    secret: process.env.ConsumerSecret
+    server: process.env.ServerKey,
+    browse: process.env.BrowserKey
 };

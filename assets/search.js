@@ -1,7 +1,6 @@
+// require("dotenv").config();
 
-// global empties so nothing is ever undefined--in theroy
-var bookCover = "assets/images/bookDefault.jpg";
-var defaultSnippit = "blank";
+// var keys = require("./keys.js");
 
 
 //Run search baised on title
@@ -10,9 +9,9 @@ $("#titleSearch").on("click", function() {
   $("#search-content").empty();
     var inputTitle = $("#titleInput").val().trim();
     console.log(inputTitle);
-   
+   var myKey = "AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
     var queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + inputTitle + 
-    "&filter=free-ebooks&orderBy=relevance&maxResults=10&langRestrict=en&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
+    "&filter=free-ebooks&orderBy=relevance&maxResults=10&langRestrict=en&key=" + myKey;
     
 
     // tells user what they searched for
@@ -36,6 +35,15 @@ $("#titleSearch").on("click", function() {
             class: "book-div",
             // width: "500px"
           });
+
+          
+
+          var saveBookIcon = $("<img>");
+            saveBookIcon.attr({
+              src: "assets/images/save-book.png",
+              width: "55px",
+              height: "40px"
+            });
         
           // first base link to book info **still needs work**--only displays json data for book
           var infolink =("<a href=" + response.items[i].selfLink + "> Book link</a>");
@@ -67,6 +75,7 @@ $("#titleSearch").on("click", function() {
           // attaches first base link to book info **still needs work**
           bookDiv.prepend(infolink);
 
+          bookDiv.append(saveBookIcon);
           //displays a still of the book cover
           bookDiv.prepend(bookImage);
           //attaches author name to the end of the div
@@ -92,9 +101,9 @@ $("#titleSearch").on("click", function() {
 
   // takes in all users selected tags and puts them into query
   var tagList = ["money", "power"];
-  console.log(tagList)
+  console.log(tagList);
   var activeTagList = ["food", "camping", "grilling", "tents"];
-  console.log(activeTagList)
+  console.log(activeTagList);
 
   console.log("inactive:  " + tagList);
   console.log("active:  " + activeTagList);
@@ -177,11 +186,22 @@ $("#titleSearch").on("click", function() {
     for(i=0; i<activeTagList.length; i++){
       var newTagAct = $("<button class=tagButton active=true tag=" + activeTagList[i] + ">").text(activeTagList[i]);
       
-      //attach the attribute of data-person to Person
-      //  newTag.attr(people[i]);
-      
-      //put new button at the end othe other buttons
-      $("#active-tags").append(newTagAct);
+      var deleteMe = $("<img>");
+        deleteMe.attr({
+          class: "delIcon",
+          src: "assets/images/deleteMe.jpg",
+          height: "15px",
+          width: "15px",
+          margin: "2px"
+        });
+
+        var tagDiv = $("<div class=tag-div>");
+
+        tagDiv.append(newTagAct);
+        tagDiv.append(deleteMe);
+       
+       //put new button at the end othe other buttons
+       $("#active-tags").append(tagDiv);
       
        
      }
@@ -193,13 +213,48 @@ $("#titleSearch").on("click", function() {
      
      //attach the attribute of data-person to Person
      //  newTag.attr(people[i]);
+
+      var deleteMeAgain = $("<img>");
+        deleteMeAgain.attr({
+          class: "delIcon",
+          src: "assets/images/deleteMe.jpg",
+          height: "15px",
+          width: "15px",
+          margin: "2px"
+        });
+      
+      var tagDivAgain = $("<div class=tag-div>");
+
+      tagDivAgain.append(newTag);
+      tagDivAgain.append(deleteMeAgain);
      
      //put new button at the end othe other buttons
-     $("#tag-pool").append(newTag);
+     $("#tag-pool").append(tagDivAgain);
      
       
     }
   }
+
+  $(document).on("click", ".delIcon", function(){
+    var tag = $(this).attr('tag');
+
+    if($(this).attr('active') == "false") {
+      var falseTagIndex = tagList.indexOf(tag);
+      tagList.splice(falseTagIndex, 1);
+
+      console.log(tagList, activeTagList);
+      renderButtons();
+      
+    }else{
+      var trueTagIndex = activeTagList.indexOf(tag);
+      activeTagList.splice(trueTagIndex, 1);
+      
+      console.log(tagList, activeTagList);
+      renderButtons();
+    }
+    
+  });
+
 
   // generates new tag button 
   $("#tagGenerator").on("click", function(){
