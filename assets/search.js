@@ -46,13 +46,14 @@ $("#titleSearch").on("click", function() {
             });
         
           // first base link to book info **still needs work**--only displays json data for book
-          var infolink =("<a href=" + response.items[i].selfLink + "> Book link</a>");
+          // var infolink =("<a href=" + response.items[i].selfLink + "> Book link</a>");
           // var infolink = bookSelfLink(response);
 
-          //gets author value for result
-          var author = response.items[i].volumeInfo.authors;
-          //creates a p tag tied to the authors name who wrote book
-          var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
+          // //gets author value for result
+          // var author = response.items[i].volumeInfo.authors;
+
+          // //creates a p tag tied to the authors name who wrote book
+          // var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
 
           //get book cover inmage from json
           response.items[i].volumeInfo.imageLinks ? 
@@ -67,19 +68,27 @@ $("#titleSearch").on("click", function() {
             width: "250px",
           });
 
-          // **Needs work**--it messes up querys need to make if elese statements to give default responeses
-          // var snippit = response.items[i].searchInfo.textSnippet;
-          // var cleansnip = snippit.trim();
-          // var snippitPrint = $("<p>").text(cleansnip);          
+          var snippit = response.items[i].searchInfo.textSnippet;
+          
+          var snippitPrint = $("<p>").text(snippit);     
+           response.items[i].searchInfo.textSnippet ? 
+            snippit = response.items[i].volumeInfo.imageLinks.thumbnail : 
+            snippit = "There is no short discription for this book";    
+            
+          // attaches textsnippit to book div
+          bookDiv.prepend(snippitPrint);       
 
           // attaches first base link to book info **still needs work**
           bookDiv.prepend(infolink);
 
+          // ave book to personal db icon
           bookDiv.append(saveBookIcon);
+
           //displays a still of the book cover
           bookDiv.prepend(bookImage);
+
           //attaches author name to the end of the div
-          bookDiv.prepend(authorName);
+          // bookDiv.prepend(authorName);
           
           // attaches all pulled info into a content pool div
           $("#search-content").append(bookDiv);
@@ -98,6 +107,14 @@ $("#titleSearch").on("click", function() {
     console.log(this);
   
   });
+
+
+
+
+    
+
+  
+
 
   // takes in all users selected tags and puts them into query
   var tagList = ["money", "power"];
@@ -137,16 +154,30 @@ $("#titleSearch").on("click", function() {
            bookDiv.attr({
              class: "book-div",
              // width: "500px"
+           })
+           .params({
+             bookId: response.items[i].id
            });
 
-           // first base link to book info **still needs work**--only displays json data for book
-          var infolink =("<a href=" + response.items[i].selfLink + "> Book link</a>");
-          // var infolink = bookSelfLink(response);
 
-          //gets author value for result
-          var author = response.items[i].volumeInfo.authors;
-          //creates a p tag tied to the authors name who wrote book
-          var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
+          var bookId = response.items[i].id;
+          console.log(bookId);
+           // first base link to book info **still needs work**--only displays json data for book
+          var infolink =("<button class=book-link href=https://www.googleapis.com/books/v1/volumes/" + bookId + 
+          "?key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4>" +"Book Link</button>");
+
+          // var newLink = $("<button>");
+          //   newLink.attr({
+          //     class: "book-link",
+          //     href: "https://www.googleapis.com/books/v1/volumes/" + bookId + "?key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4"
+          //   });
+
+
+
+          // //gets author value for result
+          // var author = response.items[i].volumeInfo.authors;
+          // //creates a p tag tied to the authors name who wrote book
+          // var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
 
           //get book cover image from json
           response.items[i].volumeInfo.imageLinks ? 
@@ -154,6 +185,7 @@ $("#titleSearch").on("click", function() {
             bookCover = "assets/images/bookDefault.jpg";
           //displays book cover on page
           var bookImage = $("<img src='" + bookCover + "'>");
+
           //setting attributes for size and lableing for each image
           bookImage.attr({
             class: "book-info",
@@ -161,13 +193,24 @@ $("#titleSearch").on("click", function() {
             width: "250px",
           });       
 
+          var snippit = response.items[i].searchInfo.textSnippet;
+          var snippitPrint = $("<p>").text(snippit);     
+           response.items[i].searchInfo.textSnippet ? 
+            snippit = response.items[i].volumeInfo.imageLinks.thumbnail : 
+            snippit = "There is no short discription for this book";    
+
+            
+          // attaches textsnippit to book div
+          bookDiv.prepend(snippitPrint);  
+
           // attaches first base link to book info **still needs work**
           bookDiv.prepend(infolink);
+          // bookDiv.prepend(newLink);
 
           //displays a still of the book cover
           bookDiv.prepend(bookImage);
           //attaches author name to the end of the div
-          bookDiv.prepend(authorName);
+          // bookDiv.prepend(authorName);
           
           // attaches all pulled info into a content pool div
           $("#search-content").append(bookDiv);
@@ -186,7 +229,7 @@ $("#titleSearch").on("click", function() {
     for(i=0; i<activeTagList.length; i++){
       var newTagAct = $("<button class=tagButton active=true tag=" + activeTagList[i] + ">").text(activeTagList[i]);
       
-      var deleteMe = $("<img>");
+      var deleteMe = $("<img active=true tag=" + tagList[i] + ">");
         deleteMe.attr({
           class: "delIcon",
           src: "assets/images/deleteMe.jpg",
@@ -214,13 +257,13 @@ $("#titleSearch").on("click", function() {
      //attach the attribute of data-person to Person
      //  newTag.attr(people[i]);
 
-      var deleteMeAgain = $("<img>");
+      var deleteMeAgain = $("<img active=false tag=" + tagList[i] + ">");
         deleteMeAgain.attr({
           class: "delIcon",
           src: "assets/images/deleteMe.jpg",
           height: "15px",
           width: "15px",
-          margin: "2px"
+          margin: "2px",
         });
       
       var tagDivAgain = $("<div class=tag-div>");
@@ -237,23 +280,39 @@ $("#titleSearch").on("click", function() {
 
   $(document).on("click", ".delIcon", function(){
     var tag = $(this).attr('tag');
+    console.log(this);
 
     if($(this).attr('active') == "false") {
       var falseTagIndex = tagList.indexOf(tag);
       tagList.splice(falseTagIndex, 1);
-
-      console.log(tagList, activeTagList);
+      console.log(falseTagIndex);
       renderButtons();
       
     }else{
       var trueTagIndex = activeTagList.indexOf(tag);
       activeTagList.splice(trueTagIndex, 1);
-      
-      console.log(tagList, activeTagList);
+      console.log(trueTagIndex);
       renderButtons();
     }
-    
   });
+    
+  $(document).on("click", ".book-link", function(){
+
+    console.log("book");
+  //   var bookId = response.items[i].accessInfo.id;
+
+  //   queryUrl = "https://www.googleapis.com/books/v1/volumes/"+ bookId + "&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
+  //   console.log(this);
+  //   $.ajax({
+  //     url: queryUrl,
+  //     method: "GET",
+  //     prettyPrint: true
+  //   })
+  //     .then(function(response) {
+  //       console.log(response);
+  // });
+});
+
 
 
   // generates new tag button 

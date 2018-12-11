@@ -16,8 +16,10 @@ var displayLoop =function(){ for(i = 0; i < results; i++){
  //creates a p tag tied to the authors name who wrote book
  var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
 
- //get book cover inmage from json
- bookCover = response.items[i].volumeInfo.imageLinks.thumbnail;
+  //get book cover image from json
+  response.items[i].volumeInfo.imageLinks ? 
+  bookCover = response.items[i].volumeInfo.imageLinks.thumbnail : 
+  bookCover = "assets/images/bookDefault.jpg";
  //displays book cover on page
  var bookImage = $("<img src='" + bookCover + "'>");
  //setting attributes for size and lableing for each image
@@ -28,9 +30,15 @@ var displayLoop =function(){ for(i = 0; i < results; i++){
  });
 
  // commented out because it messes up querys need to make if elese statements to give default responeses
- // var snippit = response.items[i].searchInfo.textSnippet;
+ var snippit = response.items[i].searchInfo.textSnippet;
  // var cleansnip = snippit.trim();
- // var snippitPrint = $("<p>").text(cleansnip);          
+ var snippitPrint = $("<p>").text(snippit);     
+ response.items[i].searchInfo.textSnippet ? 
+            snippit = response.items[i].volumeInfo.imageLinks.thumbnail : 
+            snippit = "There is no short discription for this book";     
+
+// attaches textsnippit to book div
+ bookDiv.prepend(snippitPrint);    
 
  // attaches first base link to book info **still needs work**
  bookDiv.prepend(infolink);
