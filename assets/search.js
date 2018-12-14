@@ -1,11 +1,7 @@
-// require("dotenv").config();
-
-// var keys = require("./keys.js");
-
-
 //Run search baised on title
 $("#titleSearch").on("click", function() {
   $("#searched").empty();
+  // $(".carousel-inner").empty();
   $("#search-content").empty();
     var inputTitle = $("#titleInput").val().trim();
     console.log(inputTitle);
@@ -33,6 +29,7 @@ $("#titleSearch").on("click", function() {
           const bookDiv = $("<div>");
           bookDiv.attr({
             class: "book-div",
+            // class: "carousel-item",
             // width: "500px"
           });
 
@@ -72,16 +69,17 @@ $("#titleSearch").on("click", function() {
             height: "300px",
             width: "250px",
           });
-
-          var snippit = response.items[i].searchInfo.textSnippet;
           
-          var snippitPrint = $("<p>").text(snippit);     
-           response.items[i].searchInfo.textSnippet ? 
-            snippit = response.items[i].volumeInfo.imageLinks.thumbnail : 
-            snippit = "There is no short discription for this book";    
+          response.items[i].searchInfo ? 
+          snippit = response.items[i].searchInfo.textSnippet : 
+          snippit = "There is no short discription for this book";    
+
+          var snippitPrint = $("<p class=snip>").text(snippit);     
+          
+
             
           // attaches textsnippit to book div
-          bookDiv.prepend(snippitPrint);       
+          bookDiv.prepend(snippitPrint);   
 
           // attaches first base link to book info **still needs work**
           bookDiv.prepend(infolink);
@@ -97,6 +95,7 @@ $("#titleSearch").on("click", function() {
           
           // attaches all pulled info into a content pool div
           $("#search-content").append(bookDiv);
+          // $(".carousel-inner").append(bookDiv);
 
         }
         
@@ -107,7 +106,7 @@ $("#titleSearch").on("click", function() {
 
 
 // checker to see everything in book div quickly
-  $(document).on("click", ".book-div", function() {
+  $(document).on("click", "book-div", function() {
   
     console.log(this);
   
@@ -126,7 +125,9 @@ $("#titleSearch").on("click", function() {
   $("#tag-search").on("click", function(){
     console.log($(this));
     $("#searched").empty();
+    // $(".carousel-inner").empty();
     $("#search-content").empty();
+    
 
     var tagpool= activeTagList.join("+");
     console.log(tagpool);
@@ -151,6 +152,7 @@ $("#titleSearch").on("click", function() {
            const bookDiv = $("<div>");
            bookDiv.attr({
              class: "book-div",
+             // class: "carousel-item",
              // width: "500px"
            });
 
@@ -184,7 +186,7 @@ $("#titleSearch").on("click", function() {
           snippit = response.items[i].searchInfo.textSnippet : 
           snippit = "There is no short discription for this book";    
 
-          var snippitPrint = $("<p>").text(snippit);     
+          var snippitPrint = $("<p class=snip>").text(snippit);     
           
 
             
@@ -202,9 +204,100 @@ $("#titleSearch").on("click", function() {
           
           // attaches all pulled info into a content pool div
           $("#search-content").append(bookDiv);
+          // $(".carousel-inner").append(bookDiv);
           
         }
       });
+  });
+
+  $(document).on("click", ".subject", function(){
+    $("#searched").empty();
+    // $(".carousel-inner").empty();
+    $("#search-content").empty();
+    let sub= $(this).attr("sub");
+    console.log(sub);
+
+    tagpool= activeTagList.join("+");
+    console.log(tagpool);
+
+    queryUrl = "https://www.googleapis.com/books/v1/volumes?q=" + tagpool + "+" + "subject:" + sub+ "/" +
+    "&filter=ebooks&orderBy=relevance&maxResults=30&langRestrict=en&key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4";
+
+    console.log(queryUrl);
+    $.ajax({
+      url: queryUrl,
+      method: "GET",
+      prettyPrint: true
+    })
+      .then(function(response) {
+        var results = response.items.length;
+        
+        console.log(results);
+        console.log(response);
+      
+        for(let i = 0; i < results; i++){
+
+           //makes each gif a ivdividual div with the class name of book-div
+           const bookDiv = $("<div>");
+           bookDiv.attr({
+             class: "book-div",
+             // class: "carousel-item",
+             // width: "500px"
+           });
+
+
+          bookId = response.items[i].id;
+           // first base link to book info **still needs work**--only displays json data for book
+           infolink =("<button class=book-link data-link=https://www.googleapis.com/books/v1/volumes/" + bookId + 
+           "?key=AIzaSyCMiu9BKRYCqsMEi73bivxlnUF7Ow-oQO4>Book Link</button>");
+          
+          // //gets author value for result
+          // var author = response.items[i].volumeInfo.authors;
+          // //creates a p tag tied to the authors name who wrote book
+          // var authorName = $("<p class=author-names>").text("Author(s) name: " + author);
+
+          //get book cover image from json
+          response.items[i].volumeInfo.imageLinks ? 
+            bookCover = response.items[i].volumeInfo.imageLinks.thumbnail : 
+            bookCover = "assets/images/bookDefault.jpg";
+          //displays book cover on page
+          bookImage = $("<img src='" + bookCover + "'>");
+
+          //setting attributes for size and lableing for each image
+          bookImage.attr({
+            class: "book-info",
+            height: "300px",
+            width: "250px",
+          });       
+
+          
+          response.items[i].searchInfo ? 
+          snippit = response.items[i].searchInfo.textSnippet : 
+          snippit = "There is no short discription for this book";    
+
+          var snippitPrint = $("<p class=snip>").text(snippit);     
+          
+
+            
+          // attaches textsnippit to book div
+          bookDiv.prepend(snippitPrint);  
+
+          // attaches first base link to book info **still needs work**
+          bookDiv.prepend(infolink);
+          // bookDiv.prepend(newLink);
+
+          //displays a still of the book cover
+          bookDiv.prepend(bookImage);
+          //attaches author name to the end of the div
+          // bookDiv.prepend(authorName);
+          
+          // attaches all pulled info into a content pool div
+          $("#search-content").append(bookDiv);
+          // $(".carousel-inner").append(bookDiv);
+          
+        }
+      });
+  
   });
 
   function renderButtons() {
@@ -230,6 +323,9 @@ $("#titleSearch").on("click", function() {
 
         tagDiv.append(newTagAct);
         tagDiv.append(deleteMe);
+        tagDiv.attr({
+          display: "inline-block"
+        });
        
        //put new button at the end othe other buttons
        $("#active-tags").append(tagDiv);
@@ -286,6 +382,7 @@ $("#titleSearch").on("click", function() {
     
   $(document).on("click", ".book-link", function(){
 
+    $("#search-content").empty();
    
     var bookId = $(this).data("link");
 
@@ -299,12 +396,13 @@ $("#titleSearch").on("click", function() {
       .then(function(response) {
         console.log(response);
         $("#searched").empty();
-        $("#search-content").empty();
+        
 
         const bookDiv = $("<div>");
           bookDiv.attr({
             class: "book-div",
-            // width: "500px"
+            height: "auto",
+            width: "auto"
           });
 
           for(i=0; i< response.volumeInfo.categories.length; i++){
@@ -336,6 +434,7 @@ $("#titleSearch").on("click", function() {
           
           // attaches all pulled info into a content pool div
           $("#search-content").append(bookDiv);
+          // $(".carousel-inner").append(bookDiv);
   });
 });
 

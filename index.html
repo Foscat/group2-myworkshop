@@ -1,73 +1,107 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My library search</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="assets/style.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.js"
-    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+         <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style.css">
+
+
+    <title>Tinder Reads</title>
 </head>
+
 <body>
-    <div class="Intro">
-        <h1>My book search</h1>
-    </div>
-    
-    <div class="container">
 
-        <div class="book-head">
-            <h2>Book info</h2>
-            <h4 id="searched"></h4>
-        </div>
+    <!-- Navigation  -->
+    <nav class="navbar  rounded navbar-dark" id="grad">
+        <form class="form-inline">
+                <h2>Search by title</h2>
+                <input class="form-control mr-sm-2" type="text" id="titleInput" placeholder="Enter book title">
+                <button class="btn btn-outline-lite my-2 my-sm-0" id="titleSearch" type="button">Search Title</button>
+            </form>
+    </nav>
+    <br>
+    <!-- Navigation  -->
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="bar" class="col-md-2 rounded d-none d-md-block sidebar">
+                <div class="sidebar-sticky">
 
-      
-        <form class="form-group">
-            <input type="text" id="titleInput" placeholder="Enter book title">
-            <button id="titleSearch" type="button">Search Title</button>
-        </form>
-
-        <br>
-
-        <div id="tag-box">
-            <h2>Active tags</h2>
-
-                <div id="active-tags">
-
-                
+                    <h1>Tag menu</h1>
+            
+                    <div id="tag-box">
+                        <h2>Active tags</h2>
+            
+                            <div id="active-tags">
+            
+                            
+                            </div>
+                        
+                            <br>
+                        <button id="tag-search" type="button">Search!</button>
+                    </div>
+            
+                    <br>
+            
+                    <div id="tag-form">
+                        <h2>Tag pool</h2>
+            
+                        <div id="tag-pool">
+                            
+                        </div>
+            
+                    </div>
+                    
+                    <br>
+            
+                    <form class="form-group">
+                            <input type="text" id="tagMaker" placeholder="Make a new tag!">
+                            <button id="tagGenerator" type="button">Make tag</button>
+                    </form>
                 </div>
-            
-                <br>
-            <button id="tag-search" type="button">Search!</button>
-        </div>
+            </nav>
 
-        <br>
-
-        <div id="tag-form">
-            <h2>Tag pool</h2>
-
-            <div id="tag-pool">
-                
-            </div>
-
-        </div>
-        
-        <br>
-
-        <form class="form-group">
-                <input type="text" id="tagMaker" placeholder="Make a new tag!">
-                <button id="tagGenerator" type="button">Make tag</button>
-        </form>
-
-        <div id="search-content">
+            <div id="search-content" class="col-md-5 center">
             
             </div>
 
-    </div>
-    
+            <div id="subjectsCol" class="col-md-3 rounded center">
+                <h2>Subject search</h2>
+                <h4>Click one!</h4>
+                    <ul class="uk-list">
+                        <li class="subject" sub="Tragedy">Tragedy</li>
+                        <li class="subject" sub="Science Fiction">Science Fiction</li>
+                        <li class="subject" sub="Fantasy">Fantasy</li>
+                        <li class="subject" sub="Mythology">Mythology</li>
+                        <li class="subject" sub="Adventure">Adventure</li>
+                        <li class="subject" sub="Mystery">Mystery</li>
+                        <li class="subject" sub="Drama">Drama</li>
+                        <li class="subject" sub="Romance">Romance</li>
+                        <li class="subject" sub="Action / Adventure">Action / Adventure</li>
+                        <li class="subject" sub="Satire">Satire</li>
+                        <li class="subject" sub="Horror">Horror</li>
+                    </ul>
+            </div>
+            </div>
+        </div>
+
+            <!-- Optional JavaScript -->
+            <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+            <script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+                <script src="assets/search.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+                crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+                crossorigin="anonymous"></script>
 </body>
-<!-- <script src="assets/login.js"></script> -->
-<script src="assets/search.js"></script>
+
 </html>
